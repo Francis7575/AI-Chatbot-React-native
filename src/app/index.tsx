@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import Routes from './home-screen'
+import Routes from '../routes/routes'
 
 export default function Index() {
   return (

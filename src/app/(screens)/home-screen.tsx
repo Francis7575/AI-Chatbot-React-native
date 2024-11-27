@@ -1,21 +1,37 @@
 import { useEffect, useState } from 'react'
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
-import ChatFaceData from '../services/ChatFaceData'
+import ChatFaceData from '../../services/ChatFaceData'
 import { chatFaceDataType } from '@/src/types/types'
-import { Link } from 'expo-router';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useNavigation } from '@react-navigation/native'
+
+
+export type RootStackParamList = {
+  'chat-screen': { selectedFace: chatFaceDataType | undefined }
+  'home-screen': undefined;
+};
+
+export type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'home-screen'>;
 
 export default function HomeScreen() {
   const [chatFaceData, setChatFaceData] = useState<chatFaceDataType[]>()
   const [selectedChatFace, setSelectedChatFace] = useState<chatFaceDataType | undefined>()
+  const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
-    setChatFaceData(ChatFaceData)
-    setSelectedChatFace(ChatFaceData[0])
-  }, [])
-
+    setChatFaceData(ChatFaceData);
+    if (ChatFaceData.length > 0) {
+      setSelectedChatFace(ChatFaceData[0]);  // Ensure selectedChatFace is set properly
+    }
+  }, []);
+  
   const handleChatFacePress = (id: number) => {
     setSelectedChatFace(ChatFaceData[id - 1]) // added id - 1 to show the exact item selected since the item selected is not being display it needs -1 to work properly
   }
+
+  useEffect(() => {
+    console.log('Available Routes:', navigation.getState());
+  }, []);
 
   return (
     <View style={{ alignItems: 'center', paddingTop: 90 }}>
@@ -36,6 +52,7 @@ export default function HomeScreen() {
         <FlatList
           data={chatFaceData?.filter((item) => selectedChatFace?.id !== item.id)}
           horizontal={true}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }: { item: chatFaceDataType }) => (
             <TouchableOpacity style={{ margin: 15 }} onPress={() => handleChatFacePress(item.id)}>
               <Image source={{ uri: item.image }} style={{ width: 40, height: 40 }} />
@@ -45,13 +62,14 @@ export default function HomeScreen() {
         <Text style={{ marginTop: 5, fontSize: 17, color: '#B0B0B0' }}>Choose Your Fav ChatBuddy</Text>
       </View>
 
-      <Link href="/chat-screen" style={[{ backgroundColor: selectedChatFace?.primary }, {
-        marginTop: 40, padding: 17, width: '60%',
-        borderRadius: 100, justifyContent: 'center', display: 'flex'
-      }]}
+      <TouchableOpacity onPress={() => navigation.navigate('chat-screen', {selectedFace: selectedChatFace})}
+        style={[{ backgroundColor: selectedChatFace?.primary }, {
+          marginTop: 40, padding: 17, width: '60%',
+          borderRadius: 100, justifyContent: 'center', display: 'flex'
+        }]}
       >
         <Text style={{ fontSize: 16, color: '#fff', textAlign: 'center' }}>Let's Chat</Text>
-      </Link>
+      </TouchableOpacity>
     </View>
   )
 }
