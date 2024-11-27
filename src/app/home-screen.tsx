@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Image, FlatList, TouchableOpacity, Dimensions } from 'react-native'
-import { ChatFaceData, chatFaceDataType } from '../services/ChatFaceData'
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
+import ChatFaceData from '../services/ChatFaceData'
+import { chatFaceDataType } from '@/src/types/types'
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   const [chatFaceData, setChatFaceData] = useState<chatFaceDataType[]>()
@@ -43,13 +45,13 @@ export default function HomeScreen() {
         <Text style={{ marginTop: 5, fontSize: 17, color: '#B0B0B0' }}>Choose Your Fav ChatBuddy</Text>
       </View>
 
-      <TouchableOpacity style={[{ backgroundColor: selectedChatFace?.primary }, {
-        marginTop: 40, padding: 17, width: Dimensions.get('screen').width * 0.6,
-        borderRadius: 100, alignItems: 'center'
+      <Link href="/chat-screen" style={[{ backgroundColor: selectedChatFace?.primary }, {
+        marginTop: 40, padding: 17, width: '60%',
+        borderRadius: 100, justifyContent: 'center', display: 'flex'
       }]}
       >
-        <Text style={{ fontSize: 16, color: '#fff' }}>Let's Chat</Text>
-      </TouchableOpacity>
+        <Text style={{ fontSize: 16, color: '#fff', textAlign: 'center' }}>Let's Chat</Text>
+      </Link>
     </View>
   )
 }
