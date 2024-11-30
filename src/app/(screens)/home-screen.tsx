@@ -30,10 +30,6 @@ export default function HomeScreen() {
     setSelectedChatFace(ChatFaceData[id - 1]) // added id - 1 to show the exact item selected since the item selected is not being display it needs -1 to work properly
   }
 
-  useEffect(() => {
-    console.log('Available Routes:', navigation.getState());
-  }, []);
-
   return (
     <View style={{ alignItems: 'center', paddingTop: 90 }}>
       <Text style={[{ color: selectedChatFace?.primary }, { fontSize: 30, }]}>
