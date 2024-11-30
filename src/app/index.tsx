@@ -1,10 +1,10 @@
-import { View } from 'react-native';
 import Routes from '../routes/routes'
+import { SelectedChatFaceProvider } from '../context/ChatFaceContext';
 
 export default function Index() {
   return (
-    <View>
+    <SelectedChatFaceProvider>
       <Routes />
-    </View>
+    </SelectedChatFaceProvider>
   );
 }

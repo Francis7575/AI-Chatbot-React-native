@@ -4,10 +4,11 @@ import ChatFaceData from '../../services/ChatFaceData'
 import { chatFaceDataType } from '@/src/types/types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
+import { useSelectedChatFaceContext } from '@/src/context/ChatFaceContext'
 
 
 export type RootStackParamList = {
-  'chat-screen': { selectedFace: chatFaceDataType | undefined }
+  'chat-screen': { selectedFace: chatFaceDataType | null }
   'home-screen': undefined;
 };
 
@@ -15,7 +16,7 @@ export type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'home
 
 export default function HomeScreen() {
   const [chatFaceData, setChatFaceData] = useState<chatFaceDataType[]>()
-  const [selectedChatFace, setSelectedChatFace] = useState<chatFaceDataType | undefined>()
+  const {selectedChatFace, setSelectedChatFace} = useSelectedChatFaceContext()
   const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
