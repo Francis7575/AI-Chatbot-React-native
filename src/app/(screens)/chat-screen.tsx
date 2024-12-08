@@ -99,16 +99,29 @@ export default function ChatScreen() {
         wrapperStyle={{
           right: {
             backgroundColor: '#671ddf',
-          }
+          },
         }}
         textStyle={{
           right: {
-            padding: 2
+            color: '#fff',
+            padding: 2,
+            margin: 3,
+            lineHeight: 20
           },
           left: {
             color: '#671ddf',
-            padding: 2
+            padding: 2,
+            margin: 3,
+            lineHeight: 20
           }
+        }}
+        containerStyle={{
+          right: {
+            maxWidth: '70%', // Adjust as per your requirements
+          },
+          left: {
+            maxWidth: '70%', // Adjust as per your requirements
+          },
         }}
       />
     )
